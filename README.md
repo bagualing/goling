@@ -4,6 +4,10 @@ goling
 goling package
 http://goling.org
 
+
+import "goling"
+import "goling/parse"
+
 - Natural Language Processing tool in Go programming language
 	- Go package format
 
