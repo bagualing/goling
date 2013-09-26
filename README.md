@@ -1,11 +1,11 @@
 goling
 ======
 
-goling package
+goling package \n
 http://goling.org
 
 
-import "goling"
+import "goling" \n
 import "goling/parse"
 
 - Natural Language Processing tool in Go programming language
