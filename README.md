@@ -4,9 +4,8 @@ goling
 goling package
 http://goling.org
 
-Natural Language Processing tool
-in Go programming language
-in package format
+Natural Language Processing tool in Go programming language
+	- Go package format
 
 - goling
 	- planned
