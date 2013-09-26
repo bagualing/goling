@@ -4,7 +4,7 @@ goling
 goling package
 http://goling.org
 
-Natural Language Processing tool in Go programming language
+- Natural Language Processing tool in Go programming language
 	- Go package format
 
 - goling
