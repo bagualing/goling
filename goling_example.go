@@ -34,10 +34,29 @@ func Clean_up(input_str string) string {
 	return strings.Join(temp_arr, " ")
 }
 
-func Tab_to_space(input_str string) string {
-	input_str.ReplaceAll("\t")
 
+func All_Tab_into_single_space(input_str string) string {
+	// to take any tab chracters: single tab, double tabs, ...
+	var validID = regexp.MustCompile(`\t{1,}`)
+	return validID.ReplaceAllString(input_str, " ")
 }
+
+func All_Space_into_single_tab(input_str string) string {
+	// to take any whitespace characters: single whitespace, doulbe _, ...
+	var validID = regexp.MustCompile(`\s{1,}`)
+	return validID.ReplaceAllString(input_str, "	")
+}
+
+func Tab_to_space(input_str string) string {
+	var validID = regexp.MustCompile(`\t`)
+	return validID.ReplaceAllString(input_str, " ")
+}
+
+func Space_to_tab(input_str string) string {
+	var validID = regexp.MustCompile(`\s`)
+	return validID.ReplaceAllString(input_str, "	")
+}
+
 
 func main() {
 
@@ -76,8 +95,11 @@ fmt.Println(str1)
 
 /**********************************************/
 
-tab_str := "   Hello,    World! 124  2 This 23is Go,		Great  "
-
+tab_str := "Hello World		Great"
+fmt.Println(All_Tab_into_single_space(tab_str))   // Hello World Great
+fmt.Println(All_Space_into_single_tab(tab_str))   // Hello	World	Great
+fmt.Println(Tab_to_space(tab_str))    // Hello World  Great
+fmt.Println(Space_to_tab(tab_str))    // Hello	World		Great
 
 /**********************************************/
 
