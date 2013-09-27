@@ -35,6 +35,7 @@ func Clean_up(input_str string) string {
 	return strings.Join(temp_arr, " ")
 }
 
+
 func All_Tab_into_single_space(input_str string) string {
 	// to take any tab chracters: single tab, double tabs, ...
 	var validID = regexp.MustCompile(`\t{1,}`)
@@ -55,4 +56,50 @@ func Tab_to_space(input_str string) string {
 func Space_to_tab(input_str string) string {
 	var validID = regexp.MustCompile(`\s`)
 	return validID.ReplaceAllString(input_str, "	")
+}
+
+
+// delete non-alphabetic characters
+func Delete_non_alphabet(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+// return a new string that contains only numbers
+func Extract_number(input_str string) string {
+	var validID = regexp.MustCompile(`[^\d]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+// extract numbers from string
+// export it to an array of words
+func Extract_number_to_array(input_str string) []string {
+	var validID = regexp.MustCompile(`[^\d]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	temp_str = Clean_up(temp_str)
+	return strings.Split(temp_str, " ")
+}
+
+func Split_by_word(input_str string) []string {
+	temp_str := Clean_up(input_str)
+	return strings.Split(temp_str, " ")
+}
+
+func Split_by_sen(input_str string) []string {
+	temp_str := Clean_up(input_str)
+	return strings.Split(temp_str, ". ")
+}
+
+func Count_word(input_str string) int {
+	temp_str := Clean_up(input_str)
+	temp_arr := strings.Split(temp_str, " ")
+	return len(temp_arr) 
+}
+
+func Count_character(input_str string) int {
+	temp_str := Clean_up(input_str)
+	temp_arr := strings.Split(temp_str, "")
+	return len(temp_arr) 
 }

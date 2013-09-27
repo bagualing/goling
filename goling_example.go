@@ -58,6 +58,51 @@ func Space_to_tab(input_str string) string {
 }
 
 
+// delete non-alphabetic characters
+func Delete_non_alphabet(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+// return a new string that contains only numbers
+func Extract_number(input_str string) string {
+	var validID = regexp.MustCompile(`[^\d]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+// extract numbers from string
+// export it to an array of words
+func Extract_number_to_array(input_str string) []string {
+	var validID = regexp.MustCompile(`[^\d]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	temp_str = Clean_up(temp_str)
+	return strings.Split(temp_str, " ")
+}
+
+func Split_by_word(input_str string) []string {
+	temp_str := Clean_up(input_str)
+	return strings.Split(temp_str, " ")
+}
+
+func Split_by_sen(input_str string) []string {
+	temp_str := Clean_up(input_str)
+	return strings.Split(temp_str, ". ")
+}
+
+func Count_word(input_str string) int {
+	temp_str := Clean_up(input_str)
+	temp_arr := strings.Split(temp_str, " ")
+	return len(temp_arr) 
+}
+
+func Count_character(input_str string) int {
+	temp_str := Clean_up(input_str)
+	temp_arr := strings.Split(temp_str, "")
+	return len(temp_arr) 
+}
+
 func main() {
 
 /*   practice
@@ -103,28 +148,17 @@ fmt.Println(Space_to_tab(tab_str))    // Hello	World		Great
 
 /**********************************************/
 
-// delete non-alphabetic characters
-// Hello World This is Go Great
-func Delete_non_alphabet(input_str string) string {
-
-}
-var str1 = str.replace(/[^A-Z]/gi, " "); // delete numbers, special characters
+fmt.Println(Delete_non_alphabet(str))
 
 /**********************************************/
 
-// delete non-numeric characters
-// 124 2 23
-func Delete_non_numeric(input_str string) string {
+fmt.Println(Extract_number(str))
+fmt.Println(Extract_number_to_array(str))
 
-}
-	// delete non-numeric characters
-	var str1 = str.replace(/[^\d]/gi, " ");
 /**********************************************/
 
 // split a string by words
-func Split_by_word(input_str string) []string {
 
-}
 /**********************************************/
 
 // split a string by sentences
@@ -135,16 +169,11 @@ func Split_by_sen(input_str string) []string {
 /**********************************************/
 
 // count words
-func Count_word(input_str string) int {
 
-}
 
 /**********************************************/
 
 // count characters
-func Count_character(input_str string) int {
-
-}
 
 /**********************************************/
 
@@ -243,6 +272,8 @@ words to go to documentation
 // to keep it consistent
 // only first letter in upper case
 // words divided by underscore(_)
+// no s to avoid confusion
+
 // string is an immutable object
 // no method changes the original string
 
