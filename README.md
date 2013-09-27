@@ -1,7 +1,7 @@
 ## goling
 
 ### Description
-GoLing is a natural language processing project with programming language Go. goling provides a simple text processing tools, inspired by regular expression. The main goal is "Let's not worry about the trivial and get to the point. And be the easiest tool in the world." In this sense, this is meant to be a preliminary, but useful, tool for crucial tasks.
+GoLing is a natural language processing project with programming language Go. goling provides a simple text processing tool, inspired by regular expression. The main goal is "Let's not worry about the trivial and get to the point. And be the easiest tool in the world." In this sense, this is meant to be a preliminary, still useful, tool for crucial text processing tasks.
 
 ### Installation
 `go get github.com/golingorg/goling`
@@ -17,7 +17,7 @@ import (
 
 func main() {
 	// example
-	var ex_string string = "   Hello,    World! 124  2 This 23is Go, Great  "
+	var str string = "   Hello,    World! 124  2 This 23is Go,		Great  "
 
 	// I am coding right now. Should be ready very soon
 	
