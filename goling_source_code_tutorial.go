@@ -1,6 +1,6 @@
 /*
 Author: Gyu-Ho Lee
-Update: 09/27/2013
+Update: 09/28/2013
 
 Description: Source code example with tutorialistic comments. For more detail, please visit documentation page.
 */
