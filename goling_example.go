@@ -12,6 +12,7 @@ import (
 	"regexp"
 )
 
+
 func Clean_up(input_str string) string {
  
 	// compile regular expression
@@ -41,21 +42,25 @@ func All_Tab_into_single_space(input_str string) string {
 	return validID.ReplaceAllString(input_str, " ")
 }
 
+
 func All_Space_into_single_tab(input_str string) string {
 	// to take any whitespace characters: single whitespace, doulbe _, ...
 	var validID = regexp.MustCompile(`\s{1,}`)
 	return validID.ReplaceAllString(input_str, "	")
 }
 
+
 func Tab_to_space(input_str string) string {
 	var validID = regexp.MustCompile(`\t`)
 	return validID.ReplaceAllString(input_str, " ")
 }
 
+
 func Space_to_tab(input_str string) string {
 	var validID = regexp.MustCompile(`\s`)
 	return validID.ReplaceAllString(input_str, "	")
 }
+
 
 // delete non-alphabetic characters
 func Delete_non_alphabet(input_str string) string {
@@ -64,11 +69,13 @@ func Delete_non_alphabet(input_str string) string {
 	return Clean_up(temp_str)
 }
 
+
 func Delete_punctuation(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z0-9]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
+
 
 // return a new string that contains only numbers
 func Extract_number(input_str string) string {
@@ -76,6 +83,7 @@ func Extract_number(input_str string) string {
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
+
 
 // extract numbers from string
 // export it to an array of words
@@ -85,6 +93,7 @@ func Extract_number_to_array(input_str string) []string {
 	temp_str = Clean_up(temp_str)
 	return strings.Split(temp_str, " ")
 }
+
 
 func Split_by_word(input_str string) []string {
 	temp_str := Clean_up(input_str)
@@ -132,15 +141,23 @@ func Split_by_sentence(input_str string) []string {
 	return final_arr
 }
 
+
+func Split_by_paragraph(input_str string) []string {
+	return strings.Split(input_str, "\n")
+}
+
+
 func Count_sentence(input_str string) int {
 	temp_arr := Split_by_sentence(input_str)
 	return len(temp_arr) 
 }
 
+
 func Count_word(input_str string) int {
 	temp_arr := Split_by_word(input_str)
 	return len(temp_arr) 
 }
+
 
 // count including special characters
 func Count_character(input_str string) int {
@@ -149,22 +166,27 @@ func Count_character(input_str string) int {
 	return len(temp_arr) 
 }
 
+
 // swap case: upper to lower, vice versa
 func Swap_case(input_str string) string {
 
 }
 
+
 func Capitalize_each_word(input_str string) string {
 
 }
+
 
 func Reverse_str(input_str string) string {
 
 }
 
+
 func Check_palindrome(input_str string) bool {
 
 }
+
 
 func main() {
 
@@ -259,8 +281,19 @@ fmt.Println(Insert_number_comma(str))
 
 fmt.Println(Select_split(str))
 
-}
 
+
+//**********************************************
+//             Final Example
+//**********************************************
+
+var long_text string = "This is from wikpedia.\nThe syntax of Go is broadly similar to that of C: blocks of code are surrounded with curly braces; common control flow structures include for, switch, and if. Unlike C, line-ending semicolons are optional, variable declarations are written differently and are usually optional, type conversions must be made explicitly, and new go and select control keywords have been introduced to support concurrent programming. New built-in types include maps, array slices, and channels for inter-thread communication.\nGo is designed for exceptionally fast compiling times, even on modest hardware. The language requires garbage collection. Some concurrency-related structural conventions of Go (channels and alternative channel inputs) are borrowed from Tony Hoare's CSP. Unlike previous concurrent programming languages such as occam or Limbo, Go does not provide any built-in notion of safe or verifiable concurrency.\nOf features found in C++ or Java, Go does not include type inheritance, generic programming, assertions, method overloading, or pointer arithmetic. With respect to these omissions, the Go authors express an openness to generic programming, explicitly argue against assertions and pointer arithmetic, while defending the choice to omit type inheritance as giving a more useful language, encouraging heavy use of interfaces instead. Initially, the language did not include exception handling, but in March 2010 a mechanism known as panic/recover was implemented to handle exceptional errors while avoiding some of the problems the Go authors find with exceptions."
+
+temp_long_arr := Split_by_paragraph(long_text)
+fmt.Println(temp_long_arr[1])
+/*
+The syntax of Go ....
+*/
 
 
 

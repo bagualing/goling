@@ -13,6 +13,7 @@ import (
 	"regexp"
 )
 
+
 func Clean_up(input_str string) string {
  
 	// compile regular expression
@@ -42,6 +43,7 @@ func All_Tab_into_single_space(input_str string) string {
 	return validID.ReplaceAllString(input_str, " ")
 }
 
+
 func All_Space_into_single_tab(input_str string) string {
 	// to take any whitespace characters: single whitespace, doulbe _, ...
 	var validID = regexp.MustCompile(`\s{1,}`)
@@ -58,10 +60,15 @@ func Space_to_tab(input_str string) string {
 	return validID.ReplaceAllString(input_str, "	")
 }
 
-
 // delete non-alphabetic characters
 func Delete_non_alphabet(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+func Delete_punctuation(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z0-9]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
@@ -84,22 +91,80 @@ func Extract_number_to_array(input_str string) []string {
 
 func Split_by_word(input_str string) []string {
 	temp_str := Clean_up(input_str)
-	return strings.Split(temp_str, " ")
-}
-
-func Split_by_sen(input_str string) []string {
-	temp_str := Clean_up(input_str)
-	return strings.Split(temp_str, ". ")
-}
-
-func Count_word(input_str string) int {
-	temp_str := Clean_up(input_str)
+	temp_str = Delete_punctuation(temp_str)
 	temp_arr := strings.Split(temp_str, " ")
+
+	// pop off the last unnecessary character
+	if temp_arr[0] == "" || temp_arr[0] == " " {
+		temp_arr = temp_arr[1:]
+	}
+
+	// delete the first unnessary character
+	if temp_arr[len(temp_arr)-1] == "" || temp_arr[len(temp_arr)-1] == " " {
+		temp_arr = temp_arr[:len(temp_arr)-1]
+	}
+
+	var final_arr []string
+	for _, elem := range temp_arr {
+		final_arr = append(final_arr, Clean_up(elem))
+	}
+	return final_arr
+}
+
+
+func Split_by_sentence(input_str string) []string {
+	var validID = regexp.MustCompile(`[.!?]`)
+	temp_str := validID.ReplaceAllString(input_str, "___")	
+	temp_str = Clean_up(temp_str)
+	temp_arr := strings.Split(temp_str, "___")
+
+	// pop off the last unnecessary character
+	if temp_arr[0] == "" || temp_arr[0] == " " {
+		temp_arr = temp_arr[1:]
+	}
+
+	// delete the first unnessary character
+	if temp_arr[len(temp_arr)-1] == "" || temp_arr[len(temp_arr)-1] == " " {
+		temp_arr = temp_arr[:len(temp_arr)-1]
+	}
+
+	var final_arr []string
+	for _, elem := range temp_arr {
+		final_arr = append(final_arr, Clean_up(elem))
+	}
+	return final_arr
+}
+
+func Count_sentence(input_str string) int {
+	temp_arr := Split_by_sentence(input_str)
 	return len(temp_arr) 
 }
 
+func Count_word(input_str string) int {
+	temp_arr := Split_by_word(input_str)
+	return len(temp_arr) 
+}
+
+// count including special characters
 func Count_character(input_str string) int {
 	temp_str := Clean_up(input_str)
 	temp_arr := strings.Split(temp_str, "")
 	return len(temp_arr) 
+}
+
+// swap case: upper to lower, vice versa
+func Swap_case(input_str string) string {
+
+}
+
+func Capitalize_each_word(input_str string) string {
+
+}
+
+func Reverse_str(input_str string) string {
+
+}
+
+func Check_palindrome(input_str string) bool {
+
 }
