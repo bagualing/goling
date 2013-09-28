@@ -57,10 +57,15 @@ func Space_to_tab(input_str string) string {
 	return validID.ReplaceAllString(input_str, "	")
 }
 
-
 // delete non-alphabetic characters
 func Delete_non_alphabet(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z]`)
+	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+func Delete_punctuation(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z0-9]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
@@ -83,24 +88,82 @@ func Extract_number_to_array(input_str string) []string {
 
 func Split_by_word(input_str string) []string {
 	temp_str := Clean_up(input_str)
-	return strings.Split(temp_str, " ")
-}
-
-func Split_by_sen(input_str string) []string {
-	temp_str := Clean_up(input_str)
-	return strings.Split(temp_str, ". ")
-}
-
-func Count_word(input_str string) int {
-	temp_str := Clean_up(input_str)
+	temp_str = Delete_punctuation(temp_str)
 	temp_arr := strings.Split(temp_str, " ")
+
+	// pop off the last unnecessary character
+	if temp_arr[0] == "" || temp_arr[0] == " " {
+		temp_arr = temp_arr[1:]
+	}
+
+	// delete the first unnessary character
+	if temp_arr[len(temp_arr)-1] == "" || temp_arr[len(temp_arr)-1] == " " {
+		temp_arr = temp_arr[:len(temp_arr)-1]
+	}
+
+	var final_arr []string
+	for _, elem := range temp_arr {
+		final_arr = append(final_arr, Clean_up(elem))
+	}
+	return final_arr
+}
+
+
+func Split_by_sentence(input_str string) []string {
+	var validID = regexp.MustCompile(`[.!?]`)
+	temp_str := validID.ReplaceAllString(input_str, "___")	
+	temp_str = Clean_up(temp_str)
+	temp_arr := strings.Split(temp_str, "___")
+
+	// pop off the last unnecessary character
+	if temp_arr[0] == "" || temp_arr[0] == " " {
+		temp_arr = temp_arr[1:]
+	}
+
+	// delete the first unnessary character
+	if temp_arr[len(temp_arr)-1] == "" || temp_arr[len(temp_arr)-1] == " " {
+		temp_arr = temp_arr[:len(temp_arr)-1]
+	}
+
+	var final_arr []string
+	for _, elem := range temp_arr {
+		final_arr = append(final_arr, Clean_up(elem))
+	}
+	return final_arr
+}
+
+func Count_sentence(input_str string) int {
+	temp_arr := Split_by_sentence(input_str)
 	return len(temp_arr) 
 }
 
+func Count_word(input_str string) int {
+	temp_arr := Split_by_word(input_str)
+	return len(temp_arr) 
+}
+
+// count including special characters
 func Count_character(input_str string) int {
 	temp_str := Clean_up(input_str)
 	temp_arr := strings.Split(temp_str, "")
 	return len(temp_arr) 
+}
+
+// swap case: upper to lower, vice versa
+func Swap_case(input_str string) string {
+
+}
+
+func Capitalize_each_word(input_str string) string {
+
+}
+
+func Reverse_str(input_str string) string {
+
+}
+
+func Check_palindrome(input_str string) bool {
+
 }
 
 func main() {
@@ -121,26 +184,27 @@ fmt.Println(len(temp_arr))  // 3
 
 /**********************************************/
 
-var str string = "   Hello,    World! 124  2 This 23is Go,		Great  "
+var str string = "   Hello,    World! 124  2 This 23is Go project,		It is amazing  . I am excited!    Are you too?    "
 
 fmt.Println(str)
-// "   Hello,    World! 124  2 This 23is Go,		Great  "
+// "   Hello,    World! 124  2 This 23is Go project,		It is amazing  . I am excited!    Are you too?    "
 
 fmt.Println(Clean_up(str))
-// "Hello, World! 124 2 This 23is Go, Great"
+// "Hello, World! 124 2 This 23is Go project, It is amazing . I am excited! Are you too?"
 
 fmt.Println(str)
-// "   Hello,    World! 124  2 This 23is Go,		Great  "
+// "Hello, World! 124 2 This 23is Go project, It is amazing . I am excited! Are you too?"
 // this is because a string object is immutable
 
 str1 := Clean_up(str)
 fmt.Println(str1)
-// "Hello, World! 124 2 This 23is Go, Great"
+// "Hello, World! 124 2 This 23is Go project, It is amazing . I am excited! Are you too?"
 // now we have assigned the desired string
 
 /**********************************************/
 
 tab_str := "Hello World		Great"
+fmt.Println(Clean_up(tab_str))                    // Hello World Great
 fmt.Println(All_Tab_into_single_space(tab_str))   // Hello World Great
 fmt.Println(All_Space_into_single_tab(tab_str))   // Hello	World	Great
 fmt.Println(Tab_to_space(tab_str))    // Hello World  Great
@@ -149,38 +213,62 @@ fmt.Println(Space_to_tab(tab_str))    // Hello	World		Great
 /**********************************************/
 
 fmt.Println(Delete_non_alphabet(str))
+// Hello World This is Go project It is amazing I am excited Are you too
+
+fmt.Println(Delete_punctuation(str))
+// Hello World 124 2 This 23is Go project It is amazing I am excited Are you too
 
 /**********************************************/
 
-fmt.Println(Extract_number(str))
-fmt.Println(Extract_number_to_array(str))
+fmt.Println(Extract_number(str))           // 124 2 23
+fmt.Println(Extract_number_to_array(str))  // [124 2 23]
 
 /**********************************************/
 
-// split a string by words
+fmt.Println(Split_by_word(str))
+arr1 := Split_by_word(str)
+fmt.Println("# of words:", len(arr1))   // 17
+fmt.Println(arr1[len(arr1)-2])  // you
+
+fmt.Println(Split_by_sentence(str))
+arr2 := Split_by_sentence(str)
+fmt.Println("# of sentences:", len(arr2))  // 4
+fmt.Println(arr2[len(arr2)-2])  // I am excited
 
 /**********************************************/
 
-// split a string by sentences
-func Split_by_sen(input_str string) []string {
+fmt.Println(Count_sentence(str))    // 4
+fmt.Println(Count_word(str))        // 17
+fmt.Println(Count_character(str))   // 84
+
+/**********************************************/
+
+fmt.Println(Swap_case(str))
+fmt.Println(Capitalize_str(str))
+
+/**********************************************/
+
+fmt.Println(Reverse(str))
+fmt.Println(Check_palindrome(str))
+
+/**********************************************/
+
+fmt.Println(Insert_number_comma(str))
+
+/**********************************************/
+
+fmt.Println(Select_split(str))
 
 }
 
-/**********************************************/
-
-// count words
 
 
-/**********************************************/
 
-// count characters
 
-/**********************************************/
 
-// swap case: upper to lower, vice versa
-func Swap_case(input_str string) string {
 
-}
+
+
 function SwapCase(str) {
 	// $0 = entire string
 	// $1, $2, etc = value from the last successful match
@@ -196,9 +284,8 @@ function SwapCase(str) {
 
 /**********************************************/
 // capitalize the first letter of each word
-func Capitalize_str(input_str string) string {
 
-}
+
 function LetterCapitalize(str) {
 	var word_arr = str.split(" ")
 	var cap_arr = [];
@@ -211,16 +298,21 @@ function LetterCapitalize(str) {
 /**********************************************/
 
 // reverse the order of chracters
-func Reverse(input_str string) string {
 
-}
 split reverse join
 
 /**********************************************/
 // check if a word is a palindrome or not
-func Check_palindrome(input_str string) bool {
 
-}
+
+var str_1 = "never odd or even"  // true
+var str_2 = "racecar"   // true
+var str_3 = "eye"       // true
+var str_4 = "place"     // false
+var str_5 = "Anne, I vote more cars race Rome-to-Vienna"  // true
+var str_6 = "Noel - sees Leon" // true
+var str_7 = "A war at Tarawa!" // true
+
 function Palindrome(str) {
 	// delete all non-alphabetic characters
 	// delete all white spaces
