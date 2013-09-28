@@ -13,7 +13,6 @@ import (
 	"regexp"
 )
 
-
 func Clean_up(input_str string) string {
  
 	// compile regular expression
@@ -50,15 +49,18 @@ func All_Space_into_single_tab(input_str string) string {
 	return validID.ReplaceAllString(input_str, "	")
 }
 
+
 func Tab_to_space(input_str string) string {
 	var validID = regexp.MustCompile(`\t`)
 	return validID.ReplaceAllString(input_str, " ")
 }
 
+
 func Space_to_tab(input_str string) string {
 	var validID = regexp.MustCompile(`\s`)
 	return validID.ReplaceAllString(input_str, "	")
 }
+
 
 // delete non-alphabetic characters
 func Delete_non_alphabet(input_str string) string {
@@ -67,11 +69,13 @@ func Delete_non_alphabet(input_str string) string {
 	return Clean_up(temp_str)
 }
 
+
 func Delete_punctuation(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z0-9]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
+
 
 // return a new string that contains only numbers
 func Extract_number(input_str string) string {
@@ -79,6 +83,7 @@ func Extract_number(input_str string) string {
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
+
 
 // extract numbers from string
 // export it to an array of words
@@ -88,6 +93,7 @@ func Extract_number_to_array(input_str string) []string {
 	temp_str = Clean_up(temp_str)
 	return strings.Split(temp_str, " ")
 }
+
 
 func Split_by_word(input_str string) []string {
 	temp_str := Clean_up(input_str)
@@ -135,15 +141,23 @@ func Split_by_sentence(input_str string) []string {
 	return final_arr
 }
 
+
+func Split_by_paragraph(input_str string) []string {
+	return strings.Split(input_str, "\n")
+}
+
+
 func Count_sentence(input_str string) int {
 	temp_arr := Split_by_sentence(input_str)
 	return len(temp_arr) 
 }
 
+
 func Count_word(input_str string) int {
 	temp_arr := Split_by_word(input_str)
 	return len(temp_arr) 
 }
+
 
 // count including special characters
 func Count_character(input_str string) int {
@@ -152,19 +166,31 @@ func Count_character(input_str string) int {
 	return len(temp_arr) 
 }
 
-// swap case: upper to lower, vice versa
-func Swap_case(input_str string) string {
 
-}
-
-func Capitalize_each_word(input_str string) string {
-
-}
-
+// rune is an alias for int32
+// to distinguish character values from integer values
 func Reverse_str(input_str string) string {
-
+	runes := []rune(input_str)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
 }
+
 
 func Check_palindrome(input_str string) bool {
+	temp_str := Clean_up(input_str)
+	temp_str = Delete_punctuation(temp_str)
+	temp_str = strings.ToLower(temp_str)
 
+	var validID = regexp.MustCompile(`\s{1,}`)
+	temp_str = validID.ReplaceAllString(temp_str, "")
+
+	rev_str := Reverse_str(temp_str)
+
+	if temp_str == rev_str {
+		return true
+	} else {
+		return false
+	}
 }

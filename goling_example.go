@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"strings"
 	"regexp"
+	// "strconv"
 )
-
 
 func Clean_up(input_str string) string {
  
@@ -167,25 +167,62 @@ func Count_character(input_str string) int {
 }
 
 
-// swap case: upper to lower, vice versa
-func Swap_case(input_str string) string {
-
-}
-
-
-func Capitalize_each_word(input_str string) string {
-
-}
-
-
+// rune is an alias for int32
+// to distinguish character values from integer values
 func Reverse_str(input_str string) string {
-
+	runes := []rune(input_str)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
 }
 
 
 func Check_palindrome(input_str string) bool {
+	temp_str := Clean_up(input_str)
+	temp_str = Delete_punctuation(temp_str)
+	temp_str = strings.ToLower(temp_str)
+
+	var validID = regexp.MustCompile(`\s{1,}`)
+	temp_str = validID.ReplaceAllString(temp_str, "")
+
+	rev_str := Reverse_str(temp_str)
+
+	if temp_str == rev_str {
+		return true
+	} else {
+		return false
+	}
+}
+
+
+/*
+
+// insert comma between digits  100000 -> 100,000
+func Insert_number_comma(input_num int) string {
+	temp_str := strconv.Itoa(input_num)
+	temp_str = Clean_up(temp_str)
+	var validID = regexp.MustCompile(`\B(?=(\d{3})+$)`)
+	return validID.ReplaceAllString(temp_str, ",")
+}
+
+
+// swap case: upper to lower, vice versa
+func Swap_case(input_str string) string {
+	temp_str := Clean_up(input_str)
+
+
+	var validID_1 = regexp.MustCompile(`[a-z]`)
+	str1 := validID_1.ReplaceAllString(temp_str, strings.ToUpper(temp_str))
+
+	var validID_2 = regexp.MustCompile(`[A-Z]`)
+	str2 := validID_2.ReplaceAllString(temp_str, strings.ToLower(temp_str))
+
+	return str1 + str2
 
 }
+
+*/
 
 
 func main() {
@@ -265,130 +302,30 @@ fmt.Println(Count_character(str))   // 84
 
 /**********************************************/
 
-fmt.Println(Swap_case(str))
-fmt.Println(Capitalize_str(str))
+fmt.Println(Reverse_str("Hello this is GoLing.org project"))
+// tcejorp gro.gniLoG si siht olleH
+
+fmt.Println(Check_palindrome("never odd or even")) // true
+fmt.Println(Check_palindrome("racecar")) // true
+fmt.Println(Check_palindrome("eye")) // true
+fmt.Println(Check_palindrome("place")) // false
+fmt.Println(Check_palindrome("Anne, I vote more cars race Rome-to-Vienna")) // true
+fmt.Println(Check_palindrome("Noel - sees Leon")) // true
+fmt.Println(Check_palindrome("A war at Tarawa!")) // true
 
 /**********************************************/
 
-fmt.Println(Reverse(str))
-fmt.Println(Check_palindrome(str))
-
-/**********************************************/
-
-fmt.Println(Insert_number_comma(str))
-
-/**********************************************/
-
-fmt.Println(Select_split(str))
-
-
-
-//**********************************************
-//             Final Example
-//**********************************************
-
-var long_text string = "This is from wikpedia.\nThe syntax of Go is broadly similar to that of C: blocks of code are surrounded with curly braces; common control flow structures include for, switch, and if. Unlike C, line-ending semicolons are optional, variable declarations are written differently and are usually optional, type conversions must be made explicitly, and new go and select control keywords have been introduced to support concurrent programming. New built-in types include maps, array slices, and channels for inter-thread communication.\nGo is designed for exceptionally fast compiling times, even on modest hardware. The language requires garbage collection. Some concurrency-related structural conventions of Go (channels and alternative channel inputs) are borrowed from Tony Hoare's CSP. Unlike previous concurrent programming languages such as occam or Limbo, Go does not provide any built-in notion of safe or verifiable concurrency.\nOf features found in C++ or Java, Go does not include type inheritance, generic programming, assertions, method overloading, or pointer arithmetic. With respect to these omissions, the Go authors express an openness to generic programming, explicitly argue against assertions and pointer arithmetic, while defending the choice to omit type inheritance as giving a more useful language, encouraging heavy use of interfaces instead. Initially, the language did not include exception handling, but in March 2010 a mechanism known as panic/recover was implemented to handle exceptional errors while avoiding some of the problems the Go authors find with exceptions."
-
-temp_long_arr := Split_by_paragraph(long_text)
-fmt.Println(temp_long_arr[1])
 /*
-The syntax of Go ....
+fmt.Println(Insert_number_comma(100000000))  
+// 100,000,000
+
+fmt.Println(Swap_case("Hey I am Coding RIGHT now"))
+// hEY i AM cODING right NOW
 */
 
 
-
-
-
-
-
-
-function SwapCase(str) {
-	// $0 = entire string
-	// $1, $2, etc = value from the last successful match
-	// $1 == matches lowercase only
-	// $2 == matches uppercase only
-	// checking which group is non-empty = case of the original
-
-	return str.replace(/([a-z])|([A-Z])/g,
-		function($0, $1, $2) {
-			return ($1) ? $0.toUpperCase() : $0.toLowerCase();
-		})
 }
 
-/**********************************************/
-// capitalize the first letter of each word
-
-
-function LetterCapitalize(str) {
-	var word_arr = str.split(" ")
-	var cap_arr = [];
-	for (var elem in word_arr) {
-		cap_arr.push(word_arr[elem].charAt(0).toUpperCase() 
-						+ word_arr[elem].slice(1));
-	}
-	return cap_arr.join(" ");
-}
-/**********************************************/
-
-// reverse the order of chracters
-
-split reverse join
-
-/**********************************************/
-// check if a word is a palindrome or not
-
-
-var str_1 = "never odd or even"  // true
-var str_2 = "racecar"   // true
-var str_3 = "eye"       // true
-var str_4 = "place"     // false
-var str_5 = "Anne, I vote more cars race Rome-to-Vienna"  // true
-var str_6 = "Noel - sees Leon" // true
-var str_7 = "A war at Tarawa!" // true
-
-function Palindrome(str) {
-	// delete all non-alphabetic characters
-	// delete all white spaces
-	// make them lowercase
-	var char_str = str.replace(/[^A-Z]/gi, "").toLowerCase();
-
-	// reverse string
-	var rev_str = char_str.split("").reverse().join("");
-
-	if (char_str == rev_str) return "true";
-	else return "false";
-}
-/**********************************************/
-// insert comma between digits
-// 100000 -> 100,000
-func Insert_number_comma(input_str string) string {
-
-}
-str.replace(/\B(?=(\d{3})+$)/g, ",");
-/**********************************************/
-
-// select a word and split afterwords
-// and join with spaces between words
-func Select_split(input_str string) string {
-
-}
-
-var str = "Hey Isdfadsdaydaqrqw1dsv good day I";
-str.split(/(day)/g);
-// ["Hey Isdfads", "day", "daqrqw1dsv good ", "day", " I"]
-// does NOT delete "day"
-/**********************************************/
-
-/**********************************************/
-// Demonstration
-/**********************************************/
-
-	var str string = "   Hello,    World! 124  2 This 23is Go,		Great  "
-
-	fmt.Println(ex_string)
-	fmt.Println(ex_string)
-	fmt.Println(ex_string)		
-}
 
 /*
 words to go to documentation
@@ -406,6 +343,4 @@ words to go to documentation
 // replace them with single-space
 // delete unnecessary space character at the beginning and end
 // "Hello, World! 124 2 This 23is Go,		Great"
-
-
 */
