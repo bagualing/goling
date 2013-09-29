@@ -8,13 +8,11 @@ GoLing is a natural language processing project with programming language Go. go
 mkdir $HOME/go
 export GOPATH=$HOME/go
 go get github.com/golingorg/goling
-'''
 
-And include 
-```go
+// And include in your code
 import "github.com/golingorg/goling"
 ```
-in your code
+
 
 ### Usage
 ```go
@@ -132,7 +130,7 @@ func main() {
 
 ### Source Code tutorial
 Check out this code
-
+https://github.com/golingorg/goling/blob/master/etc/tutorial_with_code.go
 
 
 ### Documentation (http://goling.org)
