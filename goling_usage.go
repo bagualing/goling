@@ -1,6 +1,19 @@
 /*
 http://golang.org/doc/code.html
 
+mkdir $HOME/go
+export GOPATH=$HOME/go
+go get github.com/golingorg/goling
+
+*********************
+downloaded as 
+/Users/user/go/src/github.com/golingorg/goling/goling.go
+*********************
+
+go install $GOPATH/src/github.com/golingorg/goling
+
+
+
 // good idea to create a different GOPATH for each
 $ mkdir $HOME/go
 $ export GOPATH=$HOME/go
