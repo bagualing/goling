@@ -1,23 +1,3 @@
-## goling
-
-### Description
-GoLing is a natural language processing project with programming language Go. goling provides a simple text processing tool, inspired by regular expression. The main goal is "Let's not worry about the trivial and get to the point. And be the easiest tool in the world." In this sense, this is meant to be a preliminary, still useful, tool for crucial text processing tasks.
-
-### Installation
-```go
-mkdir $HOME/go
-export GOPATH=$HOME/go
-go get github.com/golingorg/goling
-'''
-
-And include 
-```go
-import "github.com/golingorg/goling"
-```
-in your code
-
-### Usage
-```go
 /*
 Author: Gyu-Ho Lee
 Update: 09/29/2013
@@ -127,14 +107,3 @@ func main() {
 	// 21,391,239,213
 
 }
-```
-
-
-### Source Code tutorial
-Check out this code
-
-
-
-### Documentation (http://goling.org)
-Documentation can be found at [goling.org](http://godoc.org/).
-For more detailed documentation, read the source.

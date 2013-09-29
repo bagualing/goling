@@ -1,8 +1,9 @@
 /*
 Author: Gyu-Ho Lee
-Update: 09/28/2013
+Update: 09/29/2013
 
-Description: Source code example with tutorialistic comments. For more detail, please visit documentation page at goling.org
+Description: Source code example with tutorialistic comments.
+For more detail, please visit documentation page at goling.org.
 */
 package main
 
@@ -15,6 +16,7 @@ import (
 
 // string is an immutable object
 // no method changes the original string
+
 
 
 func Clean_up(input_str string) string {
@@ -67,16 +69,30 @@ func Space_to_tab(input_str string) string {
 
 
 // delete non-alphabetic characters
-func Delete_non_alphabet(input_str string) string {
+func Delete_non_alphabet_with_space(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
 	return Clean_up(temp_str)
 }
 
 
-func Delete_punctuation(input_str string) string {
+func Delete_non_alphabet_without_space(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z\s]`)
+	temp_str := validID.ReplaceAllString(input_str, "")
+	return Clean_up(temp_str)
+}
+
+
+func Delete_punctuation_with_space(input_str string) string {
 	var validID = regexp.MustCompile(`[^A-Za-z0-9]`)
 	temp_str := validID.ReplaceAllString(input_str, " ")
+	return Clean_up(temp_str)
+}
+
+
+func Delete_punctuation_without_space(input_str string) string {
+	var validID = regexp.MustCompile(`[^A-Za-z0-9\s]`)
+	temp_str := validID.ReplaceAllString(input_str, "")
 	return Clean_up(temp_str)
 }
 
@@ -101,7 +117,7 @@ func Extract_number_to_array(input_str string) []string {
 
 func Split_by_word(input_str string) []string {
 	temp_str := Clean_up(input_str)
-	temp_str = Delete_punctuation(temp_str)
+	temp_str = Delete_punctuation_with_space(temp_str)
 	temp_arr := strings.Split(temp_str, " ")
 
 	// pop off the last unnecessary character
@@ -147,7 +163,12 @@ func Split_by_sentence(input_str string) []string {
 
 
 func Split_by_paragraph(input_str string) []string {
-	return strings.Split(input_str, "\n")
+	temp_arr := strings.Split(input_str, "\n")
+	var final_arr []string
+	for _, elem := range temp_arr {
+		final_arr = append(final_arr, Clean_up(elem))
+	}
+	return final_arr
 }
 
 
@@ -184,7 +205,7 @@ func Reverse_str(input_str string) string {
 
 func Check_palindrome(input_str string) bool {
 	temp_str := Clean_up(input_str)
-	temp_str = Delete_punctuation(temp_str)
+	temp_str = Delete_punctuation_without_space(temp_str)
 	temp_str = strings.ToLower(temp_str)
 
 	var validID = regexp.MustCompile(`\s{1,}`)
@@ -280,16 +301,23 @@ fmt.Println(Space_to_tab(tab_str))    // Hello	World		Great
 
 /**********************************************/
 
-fmt.Println(Delete_non_alphabet(str))
+fmt.Println(Delete_non_alphabet_with_space(str))
 // Hello World This is Go project It is amazing I am excited Are you too
 
-fmt.Println(Delete_punctuation(str))
+fmt.Println(Delete_non_alphabet_without_space(str))
+// Hello World This is Go project It is amazing I am excited Are you too
+
+fmt.Println(Delete_punctuation_with_space(str))
+// Hello World 124 2 This 23is Go project It is amazing I am excited Are you too
+
+fmt.Println(Delete_punctuation_without_space(str))
 // Hello World 124 2 This 23is Go project It is amazing I am excited Are you too
 
 /**********************************************/
 
 fmt.Println(Extract_number(str))           // 124 2 23
 fmt.Println(Extract_number_to_array(str))  // [124 2 23]
+fmt.Printf("%q\n", Extract_number_to_array(str)) // ["124" "2" "23"]
 
 /**********************************************/
 
