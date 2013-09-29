@@ -2,7 +2,7 @@
 Author: Gyu-Ho Lee
 Update: 09/28/2013
 
-Description: Source code example with tutorialistic comments. For more detail, please visit documentation page.
+Description: Source code example with tutorialistic comments. For more detail, please visit documentation page at goling.org
 */
 package main
 
@@ -12,6 +12,10 @@ import (
 	"regexp"
 	"strconv"
 )
+
+// string is an immutable object
+// no method changes the original string
+
 
 func Clean_up(input_str string) string {
  
@@ -327,22 +331,3 @@ fmt.Println(Insert_number_comma(100000000))
 // 100,000,000
 
 }
-
-
-/*
-words to go to documentation
-
-// function naming
-// to keep it consistent
-// only first letter in upper case
-// words divided by underscore(_)
-// no s to avoid confusion
-
-// string is an immutable object
-// no method changes the original string
-
-// clean up space characters between words
-// replace them with single-space
-// delete unnecessary space character at the beginning and end
-// "Hello, World! 124 2 This 23is Go,		Great"
-*/

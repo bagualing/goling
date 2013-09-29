@@ -6,13 +6,20 @@ GoLing is a natural language processing project with programming language Go. go
 ### Installation
 `go get github.com/golingorg/goling`
 
+
 ### Usage
+```go
+
+```
+
+
+### Source Code tutorial
 ```go
 /*
 Author: Gyu-Ho Lee
-Update: 09/27/2013
+Update: 09/28/2013
 
-Description: Source code example with tutorialistic comments. For more detail, please visit documentation page.
+Description: Source code example with tutorialistic comments. For more detail, please visit documentation page at goling.org
 */
 package main
 
@@ -20,8 +27,12 @@ import (
 	"fmt"
 	"strings"
 	"regexp"
-	// "strconv"
+	"strconv"
 )
+
+// string is an immutable object
+// no method changes the original string
+
 
 func Clean_up(input_str string) string {
  
@@ -206,33 +217,38 @@ func Check_palindrome(input_str string) bool {
 }
 
 
-/*
+func swap_rune(r rune) rune {
+	switch {
+		case 'a' <= r && r <= 'z':
+			return r - 'a' + 'A'
+		case 'A' <= r && r <= 'Z':
+			return r - 'A' + 'a'
+		default:
+			return r
+	}
+}
+
+func Swap_case(str string) string {
+	return strings.Map(swap_rune, str)
+}
+
 
 // insert comma between digits  100000 -> 100,000
 func Insert_number_comma(input_num int) string {
 	temp_str := strconv.Itoa(input_num)
-	temp_str = Clean_up(temp_str)
-	var validID = regexp.MustCompile(`\B(?=(\d{3})+$)`)
-	return validID.ReplaceAllString(temp_str, ",")
+	var num_arr []string
+	i := len(temp_str)%3;
+	if i == 0 { i = 3 }
+	for index, elem := range strings.Split(temp_str, "") {
+		if i == index {
+			num_arr = append(num_arr, ",");
+			i += 3;
+		}
+		num_arr = append(num_arr, elem)
+	}
+	return strings.Join(num_arr, "")
 }
 
-
-// swap case: upper to lower, vice versa
-func Swap_case(input_str string) string {
-	temp_str := Clean_up(input_str)
-
-
-	var validID_1 = regexp.MustCompile(`[a-z]`)
-	str1 := validID_1.ReplaceAllString(temp_str, strings.ToUpper(temp_str))
-
-	var validID_2 = regexp.MustCompile(`[A-Z]`)
-	str2 := validID_2.ReplaceAllString(temp_str, strings.ToLower(temp_str))
-
-	return str1 + str2
-
-}
-
-*/
 
 
 func main() {
@@ -325,42 +341,16 @@ fmt.Println(Check_palindrome("A war at Tarawa!")) // true
 
 /**********************************************/
 
-/*
+fmt.Println(Swap_case("Hey I am Coding RIGHT now"))
+// hEY i AM cODING right NOW
+
 fmt.Println(Insert_number_comma(100000000))  
 // 100,000,000
 
-fmt.Println(Swap_case("Hey I am Coding RIGHT now"))
-// hEY i AM cODING right NOW
-*/
-
-
 }
-
-
-/*
-words to go to documentation
-
-// function naming
-// to keep it consistent
-// only first letter in upper case
-// words divided by underscore(_)
-// no s to avoid confusion
-
-// string is an immutable object
-// no method changes the original string
-
-// clean up space characters between words
-// replace them with single-space
-// delete unnecessary space character at the beginning and end
-// "Hello, World! 124 2 This 23is Go,		Great"
-*/
 ```
 
 
 ### Documentation (http://goling.org)
 Documentation can be found at [goling.org](http://godoc.org/).
 For more detailed documentation, read the source.
-
-### History
-001: Friday, September 27th, 2013
-- Launch the first update!
