@@ -1,9 +1,11 @@
 /*
-http://stackoverflow.com/questions/10130341/go-go-get-go-install-local-packages-and-version-control
-
 $ export GOPATH=/Users/gyuho/src
 $ cd $GOPATH/Users/gyuho/src/
 $ go get github.com/golingorg/goling
+
+good idea to create a different GOPATH for each
+$ mkdir $HOME/gopath
+
 */
 package main
 

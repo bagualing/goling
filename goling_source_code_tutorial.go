@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"strings"
 	"regexp"
-	// "strconv"
+	"strconv"
 )
 
 func Clean_up(input_str string) string {
@@ -196,33 +196,38 @@ func Check_palindrome(input_str string) bool {
 }
 
 
-/*
+func swap_rune(r rune) rune {
+	switch {
+		case 'a' <= r && r <= 'z':
+			return r - 'a' + 'A'
+		case 'A' <= r && r <= 'Z':
+			return r - 'A' + 'a'
+		default:
+			return r
+	}
+}
+
+func Swap_case(str string) string {
+	return strings.Map(swap_rune, str)
+}
+
 
 // insert comma between digits  100000 -> 100,000
 func Insert_number_comma(input_num int) string {
 	temp_str := strconv.Itoa(input_num)
-	temp_str = Clean_up(temp_str)
-	var validID = regexp.MustCompile(`\B(?=(\d{3})+$)`)
-	return validID.ReplaceAllString(temp_str, ",")
+	var num_arr []string
+	i := len(temp_str)%3;
+	if i == 0 { i = 3 }
+	for index, elem := range strings.Split(temp_str, "") {
+		if i == index {
+			num_arr = append(num_arr, ",");
+			i += 3;
+		}
+		num_arr = append(num_arr, elem)
+	}
+	return strings.Join(num_arr, "")
 }
 
-
-// swap case: upper to lower, vice versa
-func Swap_case(input_str string) string {
-	temp_str := Clean_up(input_str)
-
-
-	var validID_1 = regexp.MustCompile(`[a-z]`)
-	str1 := validID_1.ReplaceAllString(temp_str, strings.ToUpper(temp_str))
-
-	var validID_2 = regexp.MustCompile(`[A-Z]`)
-	str2 := validID_2.ReplaceAllString(temp_str, strings.ToLower(temp_str))
-
-	return str1 + str2
-
-}
-
-*/
 
 
 func main() {
@@ -315,14 +320,11 @@ fmt.Println(Check_palindrome("A war at Tarawa!")) // true
 
 /**********************************************/
 
-/*
-fmt.Println(Insert_number_comma(100000000))  
-// 100,000,000
-
 fmt.Println(Swap_case("Hey I am Coding RIGHT now"))
 // hEY i AM cODING right NOW
-*/
 
+fmt.Println(Insert_number_comma(100000000))  
+// 100,000,000
 
 }
 

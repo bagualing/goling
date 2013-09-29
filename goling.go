@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"strings"
 	"regexp"
+	"strconv"
 )
 
 func Clean_up(input_str string) string {
@@ -193,4 +194,37 @@ func Check_palindrome(input_str string) bool {
 	} else {
 		return false
 	}
+}
+
+
+func swap_rune(r rune) rune {
+	switch {
+		case 'a' <= r && r <= 'z':
+			return r - 'a' + 'A'
+		case 'A' <= r && r <= 'Z':
+			return r - 'A' + 'a'
+		default:
+			return r
+	}
+}
+
+func Swap_case(str string) string {
+	return strings.Map(swap_rune, str)
+}
+
+
+// insert comma between digits  100000 -> 100,000
+func Insert_number_comma(input_num int) string {
+	temp_str := strconv.Itoa(input_num)
+	var num_arr []string
+	i := len(temp_str)%3;
+	if i == 0 { i = 3 }
+	for index, elem := range strings.Split(temp_str, "") {
+		if i == index {
+			num_arr = append(num_arr, ",");
+			i += 3;
+		}
+		num_arr = append(num_arr, elem)
+	}
+	return strings.Join(num_arr, "")
 }
